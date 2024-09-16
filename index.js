@@ -15,7 +15,7 @@ function validate(element){
     }
 }
 
-userForm.addEventListener("submit", validateAge);
+dobInput.addEventListener("input", validateAge);
 
 function validateAge(event){
     const dob = new Date(dobInput.value); 
@@ -32,7 +32,7 @@ function validateAge(event){
 
     if(!isEligible) {
         event.preventDefault();
-        dobInput.setCustomValidity("You have not valid age from 18-55.");
+        dobInput.setCustomValidity("Your age must be between 18-55 to continue...");
         dobInput.reportValidity();
     }else{
         dobInput.setCustomValidity('');
@@ -56,13 +56,13 @@ const saveUserForm = (event) => {
         dob,
         acceptedTermsAndconditions
     };
+    let userEntries = retriveEntries();
 
     userEntries.push(entry);
-
     localStorage.setItem("user-entries",JSON.stringify(userEntries));
     displayEntries(); 
+    userForm.reset();
 }
-
 
 const retriveEntries = () =>{
     let entries = localStorage.getItem("user-entries");
@@ -71,10 +71,8 @@ const retriveEntries = () =>{
     }else{
         entries = [];
     }
-
     return entries;
 }
-let UserEntries = retriveEntries();
 
 const displayEntries = ()=>{
     const entries = retriveEntries();
